@@ -1,0 +1,2 @@
+use numpy for board array
+use tkinter for gui
