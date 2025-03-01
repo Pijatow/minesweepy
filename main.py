@@ -28,6 +28,9 @@ class Game:
         self.bomb_count, self.board_size = self.level.get(difficulty)
         self.generate_board(self.board_size, self.bomb_count)
 
+    def get_board_object():
+        return board
+
     def generate_board(self, board_size, bomb_count):
         # make empty board
         global board
