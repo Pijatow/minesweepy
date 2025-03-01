@@ -68,11 +68,11 @@ class Game:
             # print left column num in cyan
             print(COLORS["CYAN"] + str(row_num + 1).ljust(3) + COLORS["RESET"], end="")
 
-            for elem in self.board[row_num]:
-                if elem.is_bomb:
-                    print(COLORS["RED"] + str(elem).center(3) + COLORS["RESET"], end="")
+            for cell in self.board[row_num]:
+                if cell.is_bomb:
+                    print(COLORS["RED"] + str("#").center(3) + COLORS["RESET"], end="")
                 else:
-                    print(str(elem).center(3), end="")
+                    print(str(cell.neighbor_bombs_count()).center(3), end="")
             print()
 
 
@@ -135,7 +135,7 @@ class Cell:
 
     def neighbor_bombs_count(self):
         count = 0
-        for cell in self.get_neighbors():
+        for cell in self.get_neighbor_cells():
             if cell.is_bomb:
                 count += 1
         return count
