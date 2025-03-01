@@ -141,16 +141,20 @@ class Cell:
         return count
 
     def __str__(self):
-        if self.is_bomb:
-            return "#"
-        else:
-            return str(self.neighbor_bombs_count())
+        return self.__repr__()
 
     def __repr__(self):
-        if self.is_bomb:
-            return "#"
-        else:
-            return str(self.neighbor_bombs_count())
+        if self.state == self.states[0]:  # hidden
+            return " "
+        elif self.state == self.states[2]:  # flagged
+            return "?"
+        elif self.state == self.states[1]:  # revealed
+            if self.is_bomb:
+                return "#"
+            elif self.neighbor_bombs_count() == 0:
+                return " "
+            else:
+                return str(self.neighbor_bombs_count())
 
 
 if __name__ == "__main__":
