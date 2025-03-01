@@ -96,6 +96,9 @@ class Cell:
         elif self.state == self.states[0]:  # if hidden, switch to flagged
             self.state = self.states[2]
 
+    def game_over(self):
+        print("GAME OVER")
+
     def reveal(self):
         pass
 
