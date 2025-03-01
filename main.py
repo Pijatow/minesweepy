@@ -134,26 +134,11 @@ class Cell:
         return neighbor_cells
 
     def neighbor_bombs_count(self):
-        # Calculate valid cell boundaries
-        # Ensure indices don't go out of bounds (stay between 0 and board size)
-        istart = max(0, self.row - 1)
-        iend = min(self.parent.board_size - 1, self.row + 1)
-        jstart = max(0, self.column - 1)
-        jend = min(self.parent.board_size - 1, self.column + 1)
-
-        # Count bombs in neighboring cells
         count = 0
-        for i in range(istart, iend + 1):
-            for j in range(jstart, jend + 1):
-                # Skip self
-                if i == self.row and j == self.column:
-                    continue
-                # Increment count if neighbor is bomb
-                if board[i][j].is_bomb:
-                    count += 1
-
-        # Return count or empty space
-        return count if count else " "
+        for cell in self.get_neighbors():
+            if cell.is_bomb:
+                count += 1
+        return count
 
     def __str__(self):
         if self.is_bomb:
