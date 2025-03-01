@@ -100,7 +100,16 @@ class Cell:
         print("GAME OVER")
 
     def reveal(self):
-        pass
+        if self.is_bomb:
+            self.convert_to_revealed()
+            self.game_over()
+        elif self.neighbor_bombs_count() == 0:
+            self.convert_to_revealed()
+            for cell in self.get_neighbors():
+                if cell.state != self.states[1]:
+                    cell.reveal()
+        else:
+            self.convert_to_revealed()
 
     def neighbor_bombs_count(self):
         # Calculate valid cell boundaries
