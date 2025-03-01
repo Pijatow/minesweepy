@@ -18,11 +18,11 @@ class Game:
         """difficulty = easy, medium or hard"""
         self.level = {
             # pair of (bomb_count, board_size)
-            "easy": (120, 30),
+            "test": (1, 3),
+            "small": (2, 4),
+            "easy": (120, 25),
             "medium": (150, 30),
             "hard": (170, 30),
-            "small": (2, 4),
-            "test": (1, 3),
         }
         self.difficulty = difficulty
         self.bomb_count, self.board_size = self.level.get(difficulty)
