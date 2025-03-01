@@ -99,6 +99,10 @@ class Cell:
     def game_over(self):
         print("GAME OVER")
 
+    def convert_to_revealed(self):
+        self.state = self.states[1]
+
+
     def reveal(self):
         if self.is_bomb:
             self.convert_to_revealed()
