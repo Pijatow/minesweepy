@@ -102,18 +102,36 @@ class Cell:
     def convert_to_revealed(self):
         self.state = self.states[1]
 
-
     def reveal(self):
         if self.is_bomb:
             self.convert_to_revealed()
             self.game_over()
         elif self.neighbor_bombs_count() == 0:
             self.convert_to_revealed()
-            for cell in self.get_neighbors():
+            for cell in self.get_neighbor_cells():
                 if cell.state != self.states[1]:
                     cell.reveal()
         else:
             self.convert_to_revealed()
+
+    def get_neighbor_cells(self):
+        # Calculate valid cell boundaries
+        # Ensure indices don't go out of bounds (stay between 0 and board size)
+        istart = max(0, self.row - 1)
+        iend = min(self.parent.board_size - 1, self.row + 1)
+        jstart = max(0, self.column - 1)
+        jend = min(self.parent.board_size - 1, self.column + 1)
+
+        # get list of neighboring cells
+        neighbor_cells = []
+        for i in range(istart, iend + 1):
+            for j in range(jstart, jend + 1):
+                # Skip self
+                if i == self.row and j == self.column:
+                    continue
+                neighbor = board[i][j]
+                neighbor_cells.append(neighbor)
+        return neighbor_cells
 
     def neighbor_bombs_count(self):
         # Calculate valid cell boundaries
