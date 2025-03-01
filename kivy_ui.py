@@ -3,7 +3,7 @@ from kivy.uix.gridlayout import GridLayout
 from kivy.uix.button import Button
 from kivy.config import Config
 
-from main import Game
+from main import Game, Cell
 
 
 class MinesweepyApp(App):
@@ -18,11 +18,22 @@ class MinesweepyApp(App):
                 bomb_cell = Button(
                     size_hint=(None, None),
                     size=(cell_x, cell_y),
+                    on_touch_down=self.on_click,
                 )
                 bomb_cell.cell = board[i][j]
                 grid.add_widget(bomb_cell)
                 self.buttons[i][j] = bomb_cell  # Store the button reference
         return grid
+
+    def on_click(self, instance, touch):
+        if instance.collide_point(*touch.pos):  # Check if click is within this button
+            cell: Cell = instance.cell
+
+            # This method is called when any button is pressed
+            if touch.button == "left":
+                cell.reveal()
+            elif touch.button == "right":
+                cell.toggle_flagged()
 
 
 if __name__ == "__main__":
