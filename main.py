@@ -135,7 +135,7 @@ class Cell:
 
     def neighbor_bombs_count(self):
         count = 0
-        for cell in self.get_neighbors():
+        for cell in self.get_neighbor_cells():
             if cell.is_bomb:
                 count += 1
         return count
