@@ -89,7 +89,12 @@ class Cell:
         self.is_bomb = True
 
     def toggle_flagged(self):
-        pass
+        if self.state == self.states[1]:  # if revealed, skip
+            pass
+        elif self.state == self.states[2]:  # if flagged, switch to hidden
+            self.state = self.states[0]
+        elif self.state == self.states[0]:  # if hidden, switch to flagged
+            self.state = self.states[2]
 
     def reveal(self):
         pass
