@@ -1,4 +1,3 @@
-from pprint import pprint
 from random import randint
 
 board = []
@@ -29,21 +28,6 @@ class Game:
         self.bomb_count, self.board_size = self.level.get(difficulty)
         self.generate_board(self.board_size, self.bomb_count)
         self.render()
-        # self.generate_test_board(self.board_size, self.bomb_count)
-        # self.test_render()
-
-    def generate_test_board(self, board_size, bomb_count):
-        # make empty board
-        global board
-        for i in range(board_size):
-            row = []
-            for j in range(board_size):
-                row.append(Cell(i, j, self))
-            board.append(row)
-
-        # populate empty board with bombs
-        board[1][1].convert_to_bomb()
-        self.board = board
 
     def generate_board(self, board_size, bomb_count):
         # make empty board
@@ -81,18 +65,13 @@ class Game:
         for row_num in range(self.board_size):
             # print left column num in cyan
             print(COLORS["CYAN"] + str(row_num + 1).ljust(3) + COLORS["RESET"], end="")
-            
+
             for elem in self.board[row_num]:
                 if elem.is_bomb:
                     print(COLORS["RED"] + str(elem).center(3) + COLORS["RESET"], end="")
                 else:
                     print(str(elem).center(3), end="")
             print()
-
-    def test_render(self):
-        for row in board:
-            for elem in row:
-                print(elem.row, elem.column, elem.is_bomb, elem.neighbor_bombs_count())
 
 
 class Cell:
@@ -112,6 +91,7 @@ class Cell:
 
     def reveal(self):
         pass
+
     def neighbor_bombs_count(self):
         # Calculate valid cell boundaries
         # Ensure indices don't go out of bounds (stay between 0 and board size)
