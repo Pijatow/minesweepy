@@ -27,7 +27,7 @@ class Game:
         self.difficulty = difficulty
         self.bomb_count, self.board_size = self.level.get(difficulty)
         self.generate_board(self.board_size, self.bomb_count)
-        self.render()
+        self.render_in_cli()
 
     def generate_board(self, board_size, bomb_count):
         # make empty board
@@ -48,7 +48,7 @@ class Game:
             planted_bombs += 1
         self.board = board
 
-    def render(self):
+    def render_in_cli(self):
         # print game info
         print(
             f"bomb count:{self.bomb_count}, size:{self.board_size}, difficulty:{self.difficulty}"
