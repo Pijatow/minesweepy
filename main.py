@@ -19,7 +19,7 @@ class Game:
         self.level = {
             # pair of (bomb_count, board_size)
             "test": (1, 3),
-            "small": (2, 4),
+            "small": (15, 10),
             "easy": (120, 25),
             "medium": (150, 30),
             "hard": (170, 30),
