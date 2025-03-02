@@ -8,8 +8,13 @@ from main import Game, Cell
 
 class MinesweepyApp(App):
     def build(self):
-        grid = GridLayout(cols=x, rows=y)
-
+        grid = GridLayout(
+            cols=x,
+            rows=y,
+            size_hint=(None, None),
+            size=(x * cell_x, y * cell_y),
+            pos_hint={"center_x": 0.5, "top": 1},
+        )
         # create an empty 2d list of cells
         self.buttons = [[None for _ in range(x)] for _ in range(y)]
 
