@@ -1,6 +1,10 @@
+from kivy.core.window import Window
+
 from kivy.app import App
 from kivy.uix.gridlayout import GridLayout
 from kivy.uix.button import Button
+from kivy.uix.boxlayout import BoxLayout
+from kivy.uix.label import Label
 from kivy.config import Config
 
 from main import Game, Cell
@@ -8,6 +12,16 @@ from main import Game, Cell
 
 class MinesweepyApp(App):
     def build(self):
+        stack = BoxLayout(orientation="vertical")
+
+        game_info = Label(
+            text=f"{g.difficulty}   total bombs:{g.bomb_count}   size:{g.board_size}x{g.board_size}",
+            font_size=30,
+            size_hint=(None, None),
+            size=(0, 50),
+            pos_hint={"center_x": 0.5},
+        )
+
         grid = GridLayout(
             cols=x,
             rows=y,
@@ -30,7 +44,10 @@ class MinesweepyApp(App):
                 grid.add_widget(bomb_cell)
                 self.buttons[i][j] = bomb_cell  # Store the button reference
         self.update_board()
-        return grid
+        stack.add_widget(grid)
+        stack.add_widget(game_info)
+
+        return stack
 
     def on_click(self, instance, touch):
         if instance.collide_point(*touch.pos):  # Check if click is within this button
