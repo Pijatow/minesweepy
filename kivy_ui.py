@@ -16,6 +16,7 @@ class MinesweepyApp(App):
         for i in range(y):
             for j in range(x):
                 bomb_cell = Button(
+                    font_size=20,
                     size_hint=(None, None),
                     size=(cell_x, cell_y),
                     on_touch_down=self.on_click,
