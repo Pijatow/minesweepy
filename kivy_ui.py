@@ -104,9 +104,9 @@ if __name__ == "__main__":
     MinesweepyApp.board = board
 
     # xy pixel size of cells
-    cell_x, cell_y = 35, 35
-    min_window_width = cell_x*g.board_size+100
-    min_window_height = cell_y*g.board_size+100
+    cell_x, cell_y = 40, 40
+    min_window_width = cell_x * g.board_size + 100
+    min_window_height = cell_y * g.board_size + 100
 
     # Set window size before the app starts
     Config.set("graphics", "width", str(min_window_width))
