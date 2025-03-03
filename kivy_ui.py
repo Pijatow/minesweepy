@@ -11,6 +11,13 @@ from main import Game, Cell
 
 
 class MinesweepyApp(App):
+    def __init__(self, board_row, board_col, cell_x, cell_y):
+        super().__init__()
+        self.board_row = board_row
+        self.board_col = board_col
+        self.cell_x = cell_x
+        self.cell_y = cell_y
+
     def build(self):
         stack = BoxLayout(orientation="vertical")
 
@@ -90,9 +97,11 @@ class MinesweepyApp(App):
 
 
 if __name__ == "__main__":
-    g = Game(difficulty="easy")
-    x = y = g.board_size
+    g = Game(difficulty="small")
     board = g.get_board_object()
+
+    MinesweepyApp.g = g
+    MinesweepyApp.board = board
 
     # xy pixel size of cells
     cell_x, cell_y = 35, 35
@@ -105,6 +114,5 @@ if __name__ == "__main__":
 
     Window.minimum_width = min_window_width
     Window.minimum_height = min_window_height
-
     Config.set("input", "mouse", "mouse,disable_multitouch")
-    MinesweepyApp().run()
+    MinesweepyApp(g.board_size, g.board_size, cell_x, cell_y).run()
