@@ -25,18 +25,13 @@ class MinesweepyApp(App):
         grid = GridLayout()
 
         # create an empty 2d list of cells
-                bomb_cell = Button(
-                    font_size=20,
-                    size_hint=(None, None),
-                    size=(cell_x, cell_y),
-                    on_touch_down=self.on_click,
-                )
         self.buttons = [
             [None for _ in range(self.board_row)] for _ in range(self.board_col)
         ]
 
         for x in range(self.board_col):
             for y in range(self.board_row):
+                bomb_cell = Button(on_touch_down=self.on_click)
                 bomb_cell.cell = board[x][y]
                 grid.add_widget(bomb_cell)
                 self.buttons[x][y] = bomb_cell  # Store the button reference
