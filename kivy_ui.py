@@ -3,7 +3,7 @@ from kivy.core.window import Window
 from kivy.app import App
 from kivy.uix.gridlayout import GridLayout
 from kivy.uix.button import Button
-from kivy.uix.boxlayout import BoxLayout
+from kivy.uix.floatlayout import FloatLayout
 from kivy.uix.label import Label
 from kivy.config import Config
 
@@ -19,7 +19,7 @@ class MinesweepyApp(App):
         self.cell_y = cell_y
 
     def build(self):
-        stack = BoxLayout(orientation="vertical")
+        stack = FloatLayout()
 
         game_info = Label()
         grid = GridLayout()
