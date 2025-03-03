@@ -25,22 +25,25 @@ class MinesweepyApp(App):
         grid = GridLayout()
 
         # create an empty 2d list of cells
-        self.buttons = [[None for _ in range(x)] for _ in range(y)]
-
-        for i in range(y):
-            for j in range(x):
                 bomb_cell = Button(
                     font_size=20,
                     size_hint=(None, None),
                     size=(cell_x, cell_y),
                     on_touch_down=self.on_click,
                 )
-                bomb_cell.cell = board[i][j]
+        self.buttons = [
+            [None for _ in range(self.board_row)] for _ in range(self.board_col)
+        ]
+
+        for x in range(self.board_col):
+            for y in range(self.board_row):
+                bomb_cell.cell = board[x][y]
                 grid.add_widget(bomb_cell)
-                self.buttons[i][j] = bomb_cell  # Store the button reference
-        self.update_board()
+                self.buttons[x][y] = bomb_cell  # Store the button reference
+
         stack.add_widget(grid)
         stack.add_widget(game_info)
+        self.update_board()
 
         return stack
 
@@ -57,8 +60,8 @@ class MinesweepyApp(App):
 
     def update_board(self):
         """Update the text and color of all buttons based on the board state."""
-        for i in range(y):
-            for j in range(x):
+        for i in range(self.board_col):
+            for j in range(self.board_row):
                 button = self.buttons[i][j]
                 cell = button.cell
 
