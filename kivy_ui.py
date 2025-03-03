@@ -1,11 +1,13 @@
 from kivy.core.window import Window
-
+from kivy.config import Config
 from kivy.app import App
+from kivy.uix.screenmanager import ScreenManager, Screen
+
 from kivy.uix.gridlayout import GridLayout
 from kivy.uix.button import Button
 from kivy.uix.floatlayout import FloatLayout
 from kivy.uix.label import Label
-from kivy.config import Config
+
 
 from main import Game, Cell
 
@@ -19,6 +21,15 @@ class MinesweepyApp(App):
         self.cell_y = cell_y
 
     def build(self):
+        sm = ScreenManager()
+        welcome = Screen(name="welcome")
+        play = Screen(name="play")
+        game_over = Screen(name="game_over")
+
+        sm.add_widget(welcome)
+        sm.add_widget(play)
+        sm.add_widget(game_over)
+
         stack = FloatLayout()
 
         game_info = Label()
@@ -38,9 +49,9 @@ class MinesweepyApp(App):
 
         stack.add_widget(grid)
         stack.add_widget(game_info)
+        play.add_widget(stack)
         self.update_board()
-
-        return stack
+        return sm
 
     def on_click(self, instance, touch):
         if instance.collide_point(*touch.pos):  # Check if click is within this button
