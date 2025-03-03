@@ -1,0 +1,23 @@
+<GridLayout>:
+    cols: app.board_col
+    rows: app.board_row
+
+    size_hint: None, None
+    size: app.cell_x * app.g.board_size, app.cell_x * app.g.board_size
+    pos_hint: {"center_x": 0.5, "center_y": 0.5}
+
+    col_force_default: True
+    row_force_default: True
+    col_default_width: app.cell_x
+    row_default_height: app.cell_y
+
+<Button>:
+    font_size: 20
+
+
+<Label>:
+    text: f"{app.g.difficulty}   total bombs:{app.g.bomb_count}   size:{app.g.board_size}x{app.g.board_size}"
+    font_size: 25
+
+    size_hint: 1, 0.2
+    pos_hint: {"y": 0}

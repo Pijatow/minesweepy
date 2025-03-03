@@ -21,21 +21,9 @@ class MinesweepyApp(App):
     def build(self):
         stack = BoxLayout(orientation="vertical")
 
-        game_info = Label(
-            text=f"{g.difficulty}   total bombs:{g.bomb_count}   size:{g.board_size}x{g.board_size}",
-            font_size=30,
-            size_hint=(None, None),
-            size=(0, 50),
-            pos_hint={"center_x": 0.5},
-        )
+        game_info = Label()
+        grid = GridLayout()
 
-        grid = GridLayout(
-            cols=x,
-            rows=y,
-            size_hint=(None, None),
-            size=(x * cell_x, y * cell_y),
-            pos_hint={"center_x": 0.5, "top": 1},
-        )
         # create an empty 2d list of cells
         self.buttons = [[None for _ in range(x)] for _ in range(y)]
 
