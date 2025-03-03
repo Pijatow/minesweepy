@@ -31,7 +31,7 @@ class MinesweepyApp(App):
 
         for x in range(self.board_col):
             for y in range(self.board_row):
-                bomb_cell = Button(on_touch_down=self.on_click)
+                bomb_cell = Button(on_touch_up=self.on_click)
                 bomb_cell.cell = board[x][y]
                 grid.add_widget(bomb_cell)
                 self.buttons[x][y] = bomb_cell  # Store the button reference
