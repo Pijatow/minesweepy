@@ -15,6 +15,8 @@ from main import Game, Cell
 class MinesweepyApp(App):
     def build(self):
         sm = ScreenManager()
+        self.sm = sm
+
         welcome = Screen(name="welcome")
         play = Screen(name="play")
         game_over = Screen(name="game_over")
@@ -65,17 +67,26 @@ class MinesweepyApp(App):
             self.update_board()
             Window.size = (min_window_width, min_window_height)
             sm.current = "play"
+        # game_over screen elements
+        game_over_layout = Label(
+            text="GAME OVER!", pos_hint={"center_x": 0.5, "center_y": 0.5}
+        )
+        game_over.add_widget(game_over_layout)
         return sm
 
     def on_click(self, instance, touch):
         if instance.collide_point(*touch.pos):  # Check if click is within this button
             cell: Cell = instance.cell
-
-            # This method is called when any button is pressed
             if touch.button == "left":
-                cell.reveal()
+                result = cell.reveal()
+                if not result:  # GAME OVER
+                    self.sm.current = "game_over"
             elif touch.button == "right":
                 cell.toggle_flagged()
+
+            # check winning condition
+            if Cell.raw_flag_count == self.g.bomb_count == Cell.bomb_flag_count:
+                self.sm.current = "win"
             self.update_board()
 
     def update_board(self):
