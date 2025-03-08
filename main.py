@@ -77,6 +77,9 @@ class Game:
 
 
 class Cell:
+    raw_flag_count = 0
+    bomb_flag_count = 0
+
     def __init__(self, row, column, parent: Game):
         self.parent = parent
         self.states = ["hidden", "revealed", "flagged"]
@@ -94,10 +97,16 @@ class Cell:
     def toggle_flagged(self):
         if self.state == self.states[1]:  # if revealed, skip
             pass
-        elif self.state == self.states[2]:  # if flagged, switch to hidden
+        elif self.state == self.states[2]:  # unflag
             self.state = self.states[0]
-        elif self.state == self.states[0]:  # if hidden, switch to flagged
+            Cell.raw_flag_count -= 1
+            if self.is_bomb:
+                Cell.bomb_flag_count -= 1
+        elif self.state == self.states[0]:  # flag
             self.state = self.states[2]
+            Cell.raw_flag_count += 1
+            if self.is_bomb:
+                Cell.bomb_flag_count += 1
 
     def game_over(self):
         print("GAME OVER")
