@@ -115,9 +115,13 @@ class Cell:
         self.state = self.states[1]
 
     def reveal(self):
-        if self.is_bomb:
-            self.convert_to_revealed()
-            self.game_over()
+        if self.state == self.states[2]:  # skip if flagged
+            return True
+
+        if self.is_bomb:  # GAME OVER
+            # self.convert_to_revealed()
+            return False
+
         elif self.neighbor_bombs_count() == 0:
             self.convert_to_revealed()
             for cell in self.get_neighbor_cells():
@@ -125,6 +129,7 @@ class Cell:
                     cell.reveal()
         else:
             self.convert_to_revealed()
+        return True
 
     def get_neighbor_cells(self):
         # Calculate valid cell boundaries
