@@ -1,13 +1,15 @@
 from kivy.core.window import Window
 from kivy.config import Config
 from kivy.app import App
+
 from kivy.uix.screenmanager import ScreenManager, Screen
 
 from kivy.uix.gridlayout import GridLayout
 from kivy.uix.button import Button
 from kivy.uix.floatlayout import FloatLayout
 from kivy.uix.label import Label
-
+from kivy.uix.togglebutton import ToggleButton
+from kivy.uix.boxlayout import BoxLayout
 
 from main import Game, Cell
 
@@ -70,6 +72,29 @@ class MinesweepyApp(App):
             self.update_board()
             Window.size = (min_window_width, min_window_height)
             sm.current = "play"
+
+        # welcome screen elements
+        welcome_layout = BoxLayout(orientation="vertical")
+
+        # render difficulty choices
+        btn1 = ToggleButton(text="Small", group="difficulty")
+        btn1.bind(on_press=on_select)
+
+        btn2 = ToggleButton(text="Easy", group="difficulty")
+        btn2.bind(on_press=on_select)
+
+        btn3 = ToggleButton(text="Medium", group="difficulty")
+        btn3.bind(on_press=on_select)
+
+        btn4 = ToggleButton(text="Test", group="difficulty")
+        btn4.bind(on_press=on_select)
+
+        welcome_layout.add_widget(btn1)
+        welcome_layout.add_widget(btn2)
+        welcome_layout.add_widget(btn3)
+        welcome_layout.add_widget(btn4)
+        welcome.add_widget(welcome_layout)
+
         # game_over screen elements
         game_over_layout = Label(
             text="GAME OVER!", pos_hint={"center_x": 0.5, "center_y": 0.5}
