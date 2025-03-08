@@ -46,8 +46,8 @@ class Game:
             rand_i = randint(0, board_size - 1)
             rand_j = randint(0, board_size - 1)
             random_cell: Cell = board[rand_i][rand_j]
-            random_cell.convert_to_bomb()
-            planted_bombs += 1
+            if random_cell.convert_to_bomb():  # successful plant
+                planted_bombs += 1
         self.board = board
 
     def render_in_cli(self):
@@ -86,7 +86,10 @@ class Cell:
         self.column = column
 
     def convert_to_bomb(self):
-        self.is_bomb = True
+        if not self.is_bomb:
+            self.is_bomb = True
+            return True
+        return False
 
     def toggle_flagged(self):
         if self.state == self.states[1]:  # if revealed, skip
