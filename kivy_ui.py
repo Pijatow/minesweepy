@@ -13,13 +13,6 @@ from main import Game, Cell
 
 
 class MinesweepyApp(App):
-    def __init__(self, board_row, board_col, cell_x, cell_y):
-        super().__init__()
-        self.board_row = board_row
-        self.board_col = board_col
-        self.cell_x = cell_x
-        self.cell_y = cell_y
-
     def build(self):
         sm = ScreenManager()
         welcome = Screen(name="welcome")
@@ -29,28 +22,49 @@ class MinesweepyApp(App):
         sm.add_widget(welcome)
         sm.add_widget(play)
         sm.add_widget(game_over)
+        def on_select(instance):
+            self.selected_difficulty = instance.text.lower()
+            g = Game(self.selected_difficulty)
+            self.g = g
+            self.board_row = g.board_size
+            self.board_col = g.board_size
 
-        stack = FloatLayout()
+            # xy pixel size of cells
+            self.cell_x, self.cell_y = 40, 40
+            min_window_width = self.cell_x * self.board_col + 100
+            min_window_height = self.cell_y * self.board_row + 100
+            Window.minimum_width = min_window_width
+            Window.minimum_height = min_window_height
 
-        game_info = Label()
-        grid = GridLayout()
+            # play screen elements
+            stack = FloatLayout()
+            game_info = Label(
+                text=f"{self.g.difficulty}\ntotal bombs:{self.g.bomb_count}\nsize:{self.g.board_size}x{self.g.board_size}"
+            )
+            grid = GridLayout()
 
-        # create an empty 2d list of cells
-        self.buttons = [
-            [None for _ in range(self.board_row)] for _ in range(self.board_col)
-        ]
+            # create an empty 2d list of cells
+            self.buttons = [
+                [None for _ in range(self.board_row)] for _ in range(self.board_col)
+            ]
+            board = self.g.board
 
-        for x in range(self.board_col):
-            for y in range(self.board_row):
-                bomb_cell = Button(on_touch_up=self.on_click)
-                bomb_cell.cell = board[x][y]
-                grid.add_widget(bomb_cell)
-                self.buttons[x][y] = bomb_cell  # Store the button reference
+            # add cell button widgets
+            for x in range(self.board_col):
+                for y in range(self.board_row):
+                    bomb_cell = Button(on_touch_down=self.on_click)
+                    bomb_cell.cell = board[x][y]
+                    grid.add_widget(bomb_cell)
+                    self.buttons[x][y] = bomb_cell
 
-        stack.add_widget(grid)
-        stack.add_widget(game_info)
-        play.add_widget(stack)
-        self.update_board()
+            # register play screen and its widgets
+            stack.add_widget(grid)
+            stack.add_widget(game_info)
+            play.add_widget(stack)
+
+            self.update_board()
+            Window.size = (min_window_width, min_window_height)
+            sm.current = "play"
         return sm
 
     def on_click(self, instance, touch):
@@ -94,22 +108,7 @@ class MinesweepyApp(App):
 
 
 if __name__ == "__main__":
-    g = Game(difficulty="small")
-    board = g.get_board_object()
-
-    MinesweepyApp.g = g
-    MinesweepyApp.board = board
-
-    # xy pixel size of cells
-    cell_x, cell_y = 40, 40
-    min_window_width = cell_x * g.board_size + 100
-    min_window_height = cell_y * g.board_size + 100
-
-    # Set window size before the app starts
-    Config.set("graphics", "width", str(min_window_width))
-    Config.set("graphics", "height", str(min_window_height))
-
-    Window.minimum_width = min_window_width
-    Window.minimum_height = min_window_height
     Config.set("input", "mouse", "mouse,disable_multitouch")
-    MinesweepyApp(g.board_size, g.board_size, cell_x, cell_y).run()
+    Window.size = (400, 500)
+
+    MinesweepyApp().run()
