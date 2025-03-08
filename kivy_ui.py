@@ -20,10 +20,13 @@ class MinesweepyApp(App):
         welcome = Screen(name="welcome")
         play = Screen(name="play")
         game_over = Screen(name="game_over")
+        win = Screen(name="win")
 
         sm.add_widget(welcome)
         sm.add_widget(play)
         sm.add_widget(game_over)
+        sm.add_widget(win)
+
         def on_select(instance):
             self.selected_difficulty = instance.text.lower()
             g = Game(self.selected_difficulty)
@@ -72,6 +75,11 @@ class MinesweepyApp(App):
             text="GAME OVER!", pos_hint={"center_x": 0.5, "center_y": 0.5}
         )
         game_over.add_widget(game_over_layout)
+
+        # win screen elements
+        win_layout = Label(text="WON!", pos_hint={"center_x": 0.5, "center_y": 0.5})
+        win.add_widget(win_layout)
+
         return sm
 
     def on_click(self, instance, touch):
